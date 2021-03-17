@@ -82,17 +82,18 @@ const storeParameter = function (name) {
 
 const addTZ = function (dt, parameters) {
   const p = parseParameters(parameters);
-
+  const zone = {};
   if (parameters && p && dt) {
-    dt.tz = p.TZID;
-    if (dt.tz !== undefined) {
+    zone.tz = p.TZID;
+    zone.utc = dt;
+    if (zone.tz !== undefined) {
       // Remove surrouding quotes if found at the begining and at the end of the string
       // (Occurs when parsing Microsoft Exchange events containing TZID with Windows standard format instead IANA)
-      dt.tz = dt.tz.replace(/^"(.*)"$/, '$1');
+      zone.tz = zone.tz.replace(/^"(.*)"$/, '$1');
     }
   }
 
-  return dt;
+  return zone;
 };
 
 let zoneTable = null;
@@ -135,7 +136,6 @@ const dateParameter = function (name) {
 
         newDate = addTZ(newDate, parameters);
         newDate.dateOnly = true;
-
         // Store as string - worst case scenario
         return storeValueParameter(name)(newDate, curr);
       }
