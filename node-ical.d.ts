@@ -70,7 +70,7 @@ declare module 'node-ical' {
     transparency: Transparency;
     class: Class;
     summary: string;
-    start: DateWithTimeZone;
+    start: DateTimeZone;
     datetype: DateType;
     end: DateWithTimeZone;
     location: string;
@@ -103,6 +103,7 @@ declare module 'node-ical' {
     rrule: string;
     rdate: string | string[];
   }
+  export type DateTimeZone = {tz: string,utc:Date};
 
   export type DateWithTimeZone = Date & {tz: string};
   export type DateType = 'date-time' | 'date';
